@@ -1,7 +1,4 @@
 ;; -*- mode: lisp -*-
-
-(in-package #:asdf)
-
 (defsystem osc
     :name "osc"
     :author "nik gaffney <nik@fo.am>, modified by: kristoffer ström <kristoffer@rymdkoloni.se>"
