@@ -113,7 +113,9 @@
 	  (t (write-to-vector #\b)))))
     (cat lump
          (pad (padding-length (length lump))))))     
-		  
+	
+(type-of 3/9)
+	  
 (defun encode-data (data)
   "encodes data in a format suitable for an OSC message"
   (let ((lump (make-array 0 :adjustable t :fill-pointer t)))
@@ -121,8 +123,9 @@
                  `(setf lump (cat lump (,f x)))))
       (dolist (x data) 
         (typecase x
-          (integer (enc encode-int32)) 
+	  (integer (enc encode-int32)) 
           (float (enc encode-float32)) 
+          (ratio (enc encode-ratio))
           (simple-string (enc encode-string))
 	  (t (enc encode-blob))))
       lump)))
@@ -258,6 +261,11 @@
 ;; dataformat en- de- cetera.
 ;;
 ;;; ;; ;   ;  ;
+
+;; lil hack
+(defun encode-ratio (f)
+  "just convert ratio to float"
+  (encode-float32 (* f 1.0)))
 
 ;; floats are encoded using implementation specific 'internals' which is not
 ;; particulaly portable, but 'works for now'. 
