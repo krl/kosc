@@ -96,6 +96,7 @@
    i => #(105) => int32
    f => #(102) => float
    s => #(115) => string 
+   S => #(83)  => symbol
    b => #(98)  => blob
   and considers non int/float/string data to be a blob." 
 
@@ -110,12 +111,11 @@
           (integer (write-to-vector #\i))
           (float (write-to-vector #\f))
           (simple-string (write-to-vector #\s))
+          (symbol (write-to-vector #\S))
 	  (t (write-to-vector #\b)))))
     (cat lump
          (pad (padding-length (length lump))))))     
 	
-(type-of 3/9)
-	  
 (defun encode-data (data)
   "encodes data in a format suitable for an OSC message"
   (let ((lump (make-array 0 :adjustable t :fill-pointer t)))
@@ -127,6 +127,7 @@
           (float (enc encode-float32)) 
           (ratio (enc encode-ratio))
           (simple-string (enc encode-string))
+          (symbol (enc encode-symbol))
 	  (t (enc encode-blob))))
       lump)))
 
@@ -178,6 +179,7 @@
    i => #(105) => int32
    f => #(102) => float
    s => #(115) => string
+   S => #(83)  => symbol
    b => #(98)  => blob"
 
   (let ((div (position 0 data)))
@@ -195,7 +197,8 @@
 		 (push (decode-float32 (subseq acc 0 4)) 
 		       result)
 		 (setf acc (subseq acc 4)))
-		((eq x (char-code #\s))
+		((or (eq x (char-code #\s))
+		     (eq x (char-code #\S)))
 		 (let ((pointer (padded-length (position 0 acc))))
 		   (push (decode-string 
 			  (subseq acc 0 pointer))
@@ -330,6 +333,16 @@
   "encodes a string as a vector of character-codes, padded to 4 byte boundary"
   (cat (map 'vector #'char-code string) 
        (string-padding string)))
+
+;; osc-symbols are in fact strings
+
+(defun decode-symbol (data)
+  "converts a binary vector to a symbol"
+  (make-symbol 
+   (decode-string data)))
+
+(defun encode-symbol (symbol)
+  (encode-string (format nil "~a" symbol)))
 
 ;; blobs are binary data, consisting of a length (int32) and bytes which are
 ;; osc-padded to a 4 byte boundary.
