@@ -266,9 +266,9 @@
 ;;; ;; ;   ;  ;
 
 ;; lil hack
-(defun encode-ratio (f)
+(defun encode-ratio (r)
   "just convert ratio to float"
-  (encode-float32 (* f 1.0)))
+  (encode-float32 (coerce r 'float)))
 
 ;; floats are encoded using implementation specific 'internals' which is not
 ;; particulaly portable, but 'works for now'. 

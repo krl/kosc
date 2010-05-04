@@ -39,6 +39,10 @@ things to do in :osc-ex[tensions|tras]
   - add namespace exploration using cl-zeroconf
 
 changes
+  2010-05-04 - changes by Kristoffer Ström.
+     - symbol OSC type support added
+     - lisp ratio -> float conversion
+
   2009-11-24 - changes by Kristoffer Ström.
      - no extra features, just some minor fixes with
        timetags and bundle encoding
@@ -77,8 +81,3 @@ changes
      - tests in osc-tests.lisp
   2004-12-18 
      - initial version, single args only
-
-
-
-
-
