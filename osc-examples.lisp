@@ -29,7 +29,7 @@
 ;;;;;:::;;: ;     ; ;::: ;     ;; ;;     ;        ;;      ;
 
 (require :sb-bsd-sockets)
-(use-package :osc)
+(use-package :kosc)
 (use-package :sb-bsd-sockets)
 
 

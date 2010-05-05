@@ -40,7 +40,7 @@
 ;;;     an error
 ;;;
 
-(defpackage :osc
+(defpackage :kosc
   (:use :cl)
   (:documentation "OSC aka the 'open sound control' protocol")
   (:export :encode-message
@@ -48,7 +48,7 @@
 	   :decode-message
 	   :decode-bundle))
 
-(in-package :osc)
+(in-package :kosc)
  
 ;(declaim (optimize (speed 3) (safety 1) (debug 3)))
 
@@ -384,5 +384,5 @@
   (declare (type fixnum n))
   (make-array n :initial-element 0 :fill-pointer n))
 
-(provide :osc)
+(provide :kosc)
 ;; end

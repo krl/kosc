@@ -11,15 +11,6 @@ few simple examples of how to send and recieve OSC via UDP, and so far seems
 reasonably compatible with the packets send from/to max-msp, pd, supercollider
 and liblo.
 
-more details about OSC can be found at . .,
-    http://www.cnmat.berkeley.edu/OpenSoundControl/
-
-the current version of this code is avilable using darcs
-    darcs get http://fo.am/darcs/osc 
-
-or via asdf-install.. .
-         (asdf-install:install :osc)
-
 limitations
   - doesnt send nested bundles or syncronisable timetags
   - will raise an exception if the input is malformed
@@ -27,7 +18,7 @@ limitations
   - sbcl/cmucl/openmcl specific float en/decoding 
   - only supports the type(tag)s specified in the OSC spec
 
-things to do in :osc
+things to do in :kosc
   - address patterns using pcre
   - data checking and error handling
   - portable en/decoding of floats -=> ieee754 tests
@@ -39,10 +30,14 @@ things to do in :osc-ex[tensions|tras]
   - add namespace exploration using cl-zeroconf
 
 changes
+  2009-05-05 - changes by Kristoffer Ström.
+     - renamed the package to kosc to avoid name collisions
+       since i broke the API
+     - Added encoding of OSC type symbol
+     - Lisp ratio converted to float
   2009-11-24 - changes by Kristoffer Ström.
      - no extra features, just some minor fixes with
        timetags and bundle encoding
-
   2007-02-20
      - version 0.5
      - Allegro CL float en/decoding from vincent akkermans <vincent.akkermans@gmail.com> 
